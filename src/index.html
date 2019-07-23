@@ -9,11 +9,15 @@
 	<title>Allowance DApp</title>
 	<script src="web3.min.js"></script>
 	<script src="scripts/js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" media="all"/>
+
 
 
 </head>
 
 <body>
+
+
 	<div class="container">
 
 		<h1>Allowance Dapp</h1>
@@ -21,33 +25,43 @@
 		<label for="name" class="col-lg-2 control-label">
 			<h3>NodeInfo</h3>
 		</label>
-		<input id="NodeInfo" type="text">
+		<input id="NodeInfo" type="text" size=60>
 
 		<label for="name" class="col-lg-2 control-label">
-			<h3>Account</h3>
+			<h3>User address</h3>
 		</label>
-		<input id="Account" type="text">
+		<input id="Account" type="text" size=60>
 
 		<label for="name" class="col-lg-2 control-label">
 			<h3>Balance in ETH</h3>
 		</label>
-		<input id="Balance" type="text">
+		<input id="Balance" type="text" size=60>
 
 		<label for="name" class="col-lg-2 control-label">
-			<h3>Allowance amount</h3>
+			<h3>Balance of the token you choose</h3>
 		</label>
-		<input id="Allowance" type="text">
-		<label for="name" class="col-lg-2 control-label">
-			<h3>Address to allow this amount</h3>
-			<input id="AddressToAllow" type="text">
+		<input id="BalanceForthisToken" type="text" size=60>
 
-			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+		<label for="name" class="col-lg-2 control-label">
+			<h3>Allowance amount for this token</h3>
+		</label>
+		<input id="Allowance" type="text" size=60>
+		<label for="name" class="col-lg-2 control-label">
+			<h3>Approve transfer for this address: </h3>
+			<input id="AddressToAllow" type="text" size=60>
+
+
+		
+
+
 
 
 			<script>
 
 			</script>
 			<footer></footer>
+			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
 			<script src="components/jquery/dist/jquery.min.js"></script>
 			<script src="components/popper.js/dist/umd/popper.min.js"></script>

@@ -1,4 +1,8 @@
-	//Loading--------------------------------------------------
+	
+	//Allowance DApp would like to connect to your account
+	ethereum.enable();
+	
+	/* Loading Test  */  
 	function isWeb3Available() {
 		return typeof window.web3 !== "undefined";
 	}
@@ -20,7 +24,7 @@
 			statusELement.textContent = "Metamask is loaded";
 			console.log("page loaded");
 		}
-	});
+	}); //ETHER TOKEN 
 	web3.eth.getAccounts(function (error, accounts) {
 		if (error) {
 			console.log(error);
@@ -34,6 +38,7 @@
 	});
 
 
+	//
 
 	$(document).ready(function () {
 		console.log("ready!");
@@ -41,7 +46,7 @@
 		if (typeof web3 !== 'undefined') {
 			web3 = new Web3(web3.currentProvider);
 		} else {
-			// set the provider you want from Web3.providers
+			// Provider of my choice
 			web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 		}
 		web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
@@ -335,8 +340,9 @@
 	//Address of this contract
 	var token = tokenContract.at("0x82d4f4fa2bf857aec33f6d81ef4e3e52a1594df2"); //Token to allow
 	
-	/** --- Balance of the token ---
+	/** --- Balance of THIS token --- Todo: f() to apply to an another token
 	 * Check balance of this token for _owner(address)
+	 * this Token = token.name() return name
 	 * token.balanceOf(address _owner) return value
 	 */
 
@@ -350,7 +356,7 @@
 	 * 
 	 * This value changes when approve or transferFrom are called.
 	 * 
-	 * IF I want to add a tx increaseAllowance() or for delete a tx decreaseAllowance() are a solution.
+	 * Think about DecreaseAllowance n' IncreaseAllowance
 	 */
 
 	/** -- Approval ---
@@ -359,8 +365,8 @@
 	 *
 	 * token.approve(param1, uint256 _value) returns bool success;
 	 * param1 = address _spender 
-	 * param2 = _value = 00.00 token (allowed before in allowance function)
+	 * param2 = uint256 _value = 00.00 token (allowed before in allowance function)
 	 */
 
+	
 
-//---------------
