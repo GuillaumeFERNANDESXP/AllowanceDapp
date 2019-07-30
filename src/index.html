@@ -79,6 +79,22 @@
 
 <body>
 
+		<div class="container">
+				<label for="name" class="col-lg-2 control-label">
+					<h3>NODEINFO</h3>
+				</label>
+				<input id="NodeInfo" type="text" size=60>
+				<br>
+				<label for="name" class="col-lg-2 control-label">
+					<h3>ACCOUNT ADDRESS</h3>
+				</label>
+				<input id="Account" type="text" size=60>
+				<br>
+				<label for="name" class="col-lg-2 control-label">
+						<h3>ADDRESS TO APPROVE</h3>
+					</label>
+					<input id="AddressToApprove" type="text" size=60>
+
 	<table class="table table-dark">
 		<thead>
 			<tr>
@@ -97,8 +113,9 @@
 				<td>
 					<p id="BalanceEth" size=60> </p>
 				</td>
-				<td>889.99 ETH</td>
 				<td></td>
+				
+				<td>YES</td>
 				<td><label class="switch">
 						<input type="checkbox" checked id="mybtn">
 						<span class="slider round"></span>
@@ -114,7 +131,7 @@
 				</td>
 				<td>2.999 ETH</td>
 				<td>
-					<p id="allowance"></p>
+					<p id="allowance">1.76 TST</p>
 				</td>
 				<td><button type="button" class="btn btn-primary" id="myBtn">Set Allowance</button></td>
 
@@ -137,17 +154,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<div class="container">
-		<label for="name" class="col-lg-2 control-label">
-			<h3>NODEINFO</h3>
-		</label>
-		<input id="NodeInfo" type="text" size=60>
-		<br>
-		<label for="name" class="col-lg-2 control-label">
-			<h3>ACCOUNT ADDRESS</h3>
-		</label>
-		<input id="Account" type="text" size=60>
-
+	
 	
 			  
 
@@ -162,17 +169,18 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<span class="close">&times;</span>
-					<h2>Set Allowance</h2>
+					<h2> Allowance</h2>
 				</div>
 				<div class="modal-body">
-					<p>Set <p id="tokenName"></p> allowance to : <input id="allowanceAmount">
+					<p>Set <p id="tokenName">TST(TestToken)</p> allowance to : 1.76 <input id="allowanceAmount">
 						<p id="tokenSymbol"></p>
 					</p>
-					<td><button type="button" class="btn btn-primary" id="myBtn">Open </button></td>
+					<td><button type="button" class="btn btn-primary" id="myBtn">Set Allowance </button></td>
 					<p></p>
 				</div>
 				<div class="modal-footer">
-					<h3>Modal Footer</h3>
+					<h3>“You can add more token allowances to this transaction, then click the Set allowances 
+						button to generate, sign and send all transactions together.”</h3>
 				</div>
 			</div>
 
