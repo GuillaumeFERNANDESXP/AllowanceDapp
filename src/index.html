@@ -7,102 +7,187 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="author" content="Guillaume FERNANDES">
 	<title>Allowance DApp</title>
-	
-	<link rel="stylesheet" type="text/css" href="style.css" media="all"/>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+	<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
+	<style>
+			.switch {
+			  position: relative;
+			  display: inline-block;
+			  width: 60px;
+			  height: 34px;
+			}
+			
+			.switch input { 
+			  opacity: 0;
+			  width: 0;
+			  height: 0;
+			}
+			
+			.slider {
+			  position: absolute;
+			  cursor: pointer;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: #ccc;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+			
+			.slider:before {
+			  position: absolute;
+			  content: "";
+			  height: 26px;
+			  width: 26px;
+			  left: 4px;
+			  bottom: 4px;
+			  background-color: white;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+			
+			input:checked + .slider {
+			  background-color: #2196F3;
+			}
+			
+			input:focus + .slider {
+			  box-shadow: 0 0 1px #2196F3;
+			}
+			
+			input:checked + .slider:before {
+			  -webkit-transform: translateX(26px);
+			  -ms-transform: translateX(26px);
+			  transform: translateX(26px);
+			}
+			
+			/* Rounded sliders */
+			.slider.round {
+			  border-radius: 34px;
+			}
+			
+			.slider.round:before {
+			  border-radius: 50%;
+			}
+			</style>
 
 </head>
 
 <body>
 
-		<table class="table table-dark">
-				<thead>
-				  <tr>
-					<th scope="col">#</th>
-					<th scope="col">Token Name</th>
-					<th scope="col">Balance</th>
-					<th scope="col">Eth Equivalent</th>
-					<th scope="col">Set Allowance</th>
-				  </tr>
-				</thead>
-				<tbody>
-				  <tr>
-					<th scope="row">1</th>
-					<td>ETH (Ethereum)</td>
-					<td><input id="BalanceEth" type="text" size=60></td>
-					<td>889.99 ETH</td>
-					<td><button type="button"  class="btn btn-primary" id="myBtn">Open Modal</button></td>
-				  </tr>
-				  <tr>
-					<th scope="row">2</th>
-					<td>TST (TestToken)</td>
-					<td>30 TST</td>
-					<td>2.999 ETH</td>
-					<td><button type="button"  class="btn btn-primary" id="myBtn">Open Modal</button></td>
+	<table class="table table-dark">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Token Name</th>
+				<th scope="col">Balance</th>
+				<th scope="col">Eth Equivalent</th>
+				<th scope="col">Allowance</th>
+				<th scope="col">Set Allowance</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>ETH (Ethereum)</td>
+				<td>
+					<p id="BalanceEth" size=60> </p>
+				</td>
+				<td>889.99 ETH</td>
+				<td></td>
+				<td><label class="switch">
+						<input type="checkbox" checked id="mybtn">
+						<span class="slider round"></span>
+					  </label></td>
+			</tr>
+			<tr>
+				<th scope="row">2</th>
+				<td>
+					<p id="tokenSymbol" size=60></p>TST (TestToken)
+				</td>
+				<td>
+					<p id="balanceOfToken"></p>30 TST
+				</td>
+				<td>2.999 ETH</td>
+				<td>
+					<p id="allowance"></p>
+				</td>
+				<td><button type="button" class="btn btn-primary" id="myBtn">Set Allowance</button></td>
 
-				  </tr>
-				  <tr>
-					<th scope="row">3</th>
-					<td>PIG (PigeonCoin)</td>
-					<td>40 PIG</td>
-					<td>12.34 ETH</td>
-					<td><button type="button"  class="btn btn-primary" id="myBtn">Open Modal</button></td>
+			</tr>
+			<tr>
+				<th scope="row">3</th>
+				<td>
+					<p id="tokenSymbol2"></p>PIG (PigeonCoin)
+				</td>
+				<td>
+					<p id="tokenSymbol2"></p>40 PIG
+				</td>
+				<td>12.34 ETH</td>
+				<td></td>
+				<td><label class="switch">
+						<input type="checkbox" checked id="mybtn">
+						<span class="slider round"></span>
+					  </label></td>
 
-				  </tr>
-				</tbody>
-			  </table>
-	<div class="container" >
-		<label for="name" class="col-lg-2 control-label" >
+			</tr>
+		</tbody>
+	</table>
+	<div class="container">
+		<label for="name" class="col-lg-2 control-label">
 			<h3>NODEINFO</h3>
 		</label>
-		<input id="NodeInfo" type="text" size=60 >
+		<input id="NodeInfo" type="text" size=60>
 		<br>
 		<label for="name" class="col-lg-2 control-label">
 			<h3>ACCOUNT ADDRESS</h3>
 		</label>
 		<input id="Account" type="text" size=60>
-		
+
 	
-		
-		
+			  
+
+
 		<!-- Trigger/Open The Modal -->
-		
-		
+
+
 		<!-- The Modal -->
 		<div id="myModal" class="modal">
-		
-		  <!-- Modal content -->
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <span class="close">&times;</span>
-			  <h2>Set Allowance</h2>
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="close">&times;</span>
+					<h2>Set Allowance</h2>
+				</div>
+				<div class="modal-body">
+					<p>Set <p id="tokenName"></p> allowance to : <input id="allowanceAmount">
+						<p id="tokenSymbol"></p>
+					</p>
+					<td><button type="button" class="btn btn-primary" id="myBtn">Open </button></td>
+					<p></p>
+				</div>
+				<div class="modal-footer">
+					<h3>Modal Footer</h3>
+				</div>
 			</div>
-			<div class="modal-body">
-			  <p>Set 'token.name' allowance to: 'allowanceAmount'</p>
-			  <td><button type="button"  class="btn btn-primary" id="myBtn">Open </button></td>
-			  <p></p>
-			</div>
-			<div class="modal-footer">
-			  <h3>Modal Footer</h3>
-			</div>
-		  </div>
-		
+
 		</div>
-			<script>
+		<script>
 
-			</script>
-			<footer></footer>
-			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-			<script src="components/jquery/dist/jquery.min.js"></script>
-			<script src="components/popper.js/dist/umd/popper.min.js"></script>
-			<script src="components/bootstrap/dist/js/bootstrap.js"></script>
-			<script src="scripts/js/main.js"></script>
-
-			<script src="web3.min.js"></script>
-			<script src="scripts/js/main.js"></script>
+		</script>
+		<footer></footer>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="components/jquery/dist/jquery.min.js"></script>
+		<script src="components/popper.js/dist/umd/popper.min.js"></script>
+		<script src="components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="scripts/js/main.js"></script>
+		<script src="web3.min.js"></script>
+		<script src="scripts/js/main.js"></script>
 </body>
 
 </html>

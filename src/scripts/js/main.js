@@ -9,6 +9,8 @@ var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
+ 
+
 btn.onclick = function () {
 	modal.style.display = "block";
 }
@@ -59,7 +61,7 @@ web3.eth.getAccounts(function (error, accounts) {
 	$('#Account').val(accounts[0]);
 	web3.eth.getBalance(accounts[0]).then(function (result) {
 		console.log("Balance : ", web3.utils.fromWei(result, 'ether'));
-		$('#BalanceEth').val(web3.utils.fromWei(result, 'ether'));
+		$('#BalanceEth').text(web3.utils.fromWei(result, 'ether'));
 	});
 
 });
@@ -92,26 +94,32 @@ $(document).ready(function () {
 });
 
 //Interacting with the smart contract --- TestTokenContract ---
-var abi = require('TokenJson') //Token Abi json pompé sur le web
+var contractAddress = '0x00000000';
+var abi = require('TokenJson') //Token Abi 
+
 var token = web3.eth.contract(abi).at(contractAddress)
 var addr = web3.eth.accounts[0]
 
-// Get the token NAME
-token.name.call(function(err, name) { 
-  if(err) { console.log(err) }
-  if(name) { console.log('The token name is: ' + name);$('#tokenName').val(name); }
-})
+
 /** --- Balance of THIS token --- Todo: f() to apply to an another token
  * Check balance of this token for _owner(address)
  * this Token = token.name() return name
  * token.balanceOf(address _owner) return value
  */
 
-var addr
+
 function startApp(){
 	var token = web3.eth.contract(abi).at(contractAddress);
 	addr = web3.eth.accounts[0];
 	window.token = token;
+
+// Get the token NAME
+	token.name.call(function(err, name) { 
+  if(err) { console.log(err) }
+  if(name) { console.log('The token name is: ' + name);
+  $('#tokenName').val(name); }
+})
+
 
  // Get the token SYMBOL
 	token.symbol.call({from: addr}, function(err, symbol) {
@@ -125,7 +133,7 @@ function startApp(){
   token.balanceOf.call(web3.eth.accounts[0], function(err, bal) {
 	if (err) { console.error(err) }
 	console.log('balance is ' + bal.toString(10));
-	$('#balanceOf').val(bal);
+	$('#balanceOfToken').val(bal);
   });
   
 /** --- Allowance ---
@@ -140,12 +148,20 @@ function startApp(){
  * Think about DecreaseAllowance n' IncreaseAllowance
  */
 
- spender = //addresse input
+spender = $('#SpenderAllowance').val(); 
+
 token.allowance.call(web3.eth.accounts[0], spender,  function (err, allow){
 	if(err) { console.log(err) }
 	console.log('allowance for this' + allow.toString(10));
 	$('#allowance').val(allow);
 })
+/**
+ * allowance(address ownerAddress, address spenderAddress)
+The allowance function tells 
+how many tokens the ownerAddress HAS ALLOWED the spenderAddress to spend.
+ */
+
+
 
 /** -- Approval ---
  * Check if address _spender is allowed to spend token of account[0] + define the event of approval
@@ -155,10 +171,11 @@ token.allowance.call(web3.eth.accounts[0], spender,  function (err, allow){
  * param1 = address _spender
  * param2 = uint256 _value = 00.00 token (allowed before in allowance function)
  */
-token.approve(spender, value, function(err, approval){
+token.approve(spender, allow, function(err, approval){
 	if(err) {console.log(err)}
 	console.log('boolean for this approval' + approval )
 	$('#approval').val(approval);
 })
 
 }
+
