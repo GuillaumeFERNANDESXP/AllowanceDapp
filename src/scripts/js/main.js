@@ -40,19 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
 	console.log(isEthereumAvailable() ? "Ethereum is available" : "No ethereum");
 	console.log(isWeb3Available() ? "Web3 is available" : "No web3");
 
-	if (!isWeb3Available() || !isEthereumAvailable()) {
-		console.log("Metamask is not loaded");
-		const provider = window["ethereum"] || window.web3.currentProvider;
-
-	} else {
-		console.log("page loaded" + "Metamask is loaded");
-	}
+	if (!isWeb3Available() || !isEthereumAvailable()) {console.log("Metamask is not loaded");
+		const provider = window["ethereum"] || window.web3.currentProvider;}
+		else {console.log("page loaded" + "Metamask is loaded");}
 }); 
 //ETHER TOKEN 
 web3.eth.getAccounts(function (error, accounts) {
-	if (error) {
-		console.log(error);
-	}
+	if (error) {console.log(error);}
 	$('#Account').val(accounts[0]);
 	web3.eth.getBalance(accounts[0]).then(function (result) {
 		console.log("Balance : ", web3.utils.fromWei(result, 'ether'));
@@ -64,592 +58,342 @@ $(document).ready(function () {
 	console.log("ready!");
 	if (typeof window !== 'undefined') {
         if(window.web3 !== 'undefined'){
-            const provider = new Web3.providers.HttpProvider(
-                'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); //TST api key infura
+			const provider = new Web3.providers.HttpProvider(
+                'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); //API key Infura
             web3 = new Web3(provider);
-        } else{
-            web3 = new Web3(window.web3.currentProvider);
-        }
-    } else {
-        const provider = new Web3.providers.HttpProvider(
-			'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); // TST api key infura
+        } else{web3 = new Web3(window.web3.currentProvider);}
+    } else {const provider = new Web3.providers.HttpProvider(
+			'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); // API key Infura
         web3 = new Web3(provider);
     };	/* Get Node Info */
 	web3.eth.getNodeInfo(function (error, result) {
-		if (error) {
-			console.log("error", error);
-		}
-		else {
-			console.log("result", result);
-			$('#NodeInfo').val(result);
-		}
-		var account = web3.eth.accounts[0]
-		var contractABI = [
-			
-				{
-				  "constant": true,
-				  "inputs": [],
-				  "name": "name",
-				  "outputs": [
-					{
-					  "name": "",
-					  "type": "string"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": false,
-				  "inputs": [
-					{
-					  "name": "_spender",
-					  "type": "address"
-					},
-					{
-					  "name": "_value",
-					  "type": "uint256"
-					}
-				  ],
-				  "name": "approve",
-				  "outputs": [
-					{
-					  "name": "success",
-					  "type": "bool"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [],
-				  "name": "totalSupply",
-				  "outputs": [
-					{
-					  "name": "",
-					  "type": "uint256"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": false,
-				  "inputs": [
-					{
-					  "name": "_from",
-					  "type": "address"
-					},
-					{
-					  "name": "_to",
-					  "type": "address"
-					},
-					{
-					  "name": "_value",
-					  "type": "uint256"
-					}
-				  ],
-				  "name": "transferFrom",
-				  "outputs": [
-					{
-					  "name": "success",
-					  "type": "bool"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [],
-				  "name": "decimals",
-				  "outputs": [
-					{
-					  "name": "",
-					  "type": "uint8"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [],
-				  "name": "version",
-				  "outputs": [
-					{
-					  "name": "",
-					  "type": "string"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [
-					{
-					  "name": "_owner",
-					  "type": "address"
-					}
-				  ],
-				  "name": "balanceOf",
-				  "outputs": [
-					{
-					  "name": "balance",
-					  "type": "uint256"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [],
-				  "name": "symbol",
-				  "outputs": [
-					{
-					  "name": "",
-					  "type": "string"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": false,
-				  "inputs": [
-					{
-					  "name": "_to",
-					  "type": "address"
-					},
-					{
-					  "name": "_value",
-					  "type": "uint256"
-					}
-				  ],
-				  "name": "transfer",
-				  "outputs": [
-					{
-					  "name": "success",
-					  "type": "bool"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": false,
-				  "inputs": [
-					{
-					  "name": "_spender",
-					  "type": "address"
-					},
-					{
-					  "name": "_value",
-					  "type": "uint256"
-					},
-					{
-					  "name": "_extraData",
-					  "type": "bytes"
-					}
-				  ],
-				  "name": "approveAndCall",
-				  "outputs": [
-					{
-					  "name": "success",
-					  "type": "bool"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": true,
-				  "inputs": [
-					{
-					  "name": "_owner",
-					  "type": "address"
-					},
-					{
-					  "name": "_spender",
-					  "type": "address"
-					}
-				  ],
-				  "name": "allowance",
-				  "outputs": [
-					{
-					  "name": "remaining",
-					  "type": "uint256"
-					}
-				  ],
-				  "type": "function"
-				},
-				{
-				  "constant": false,
-				  "type": "fallback"
-				},
-				{
-				  "anonymous": false,
-				  "inputs": [
-					{
-					  "indexed": true,
-					  "name": "_from",
-					  "type": "address"
-					},
-					{
-					  "indexed": true,
-					  "name": "_to",
-					  "type": "address"
-					},
-					{
-					  "indexed": false,
-					  "name": "_value",
-					  "type": "uint256"
-					}
-				  ],
-				  "name": "Transfer",
-				  "type": "event"
-				},
-				{
-				  "anonymous": false,
-				  "inputs": [
-					{
-					  "indexed": true,
-					  "name": "_owner",
-					  "type": "address"
-					},
-					{
-					  "indexed": true,
-					  "name": "_spender",
-					  "type": "address"
-					},
-					{
-					  "indexed": false,
-					  "name": "_value",
-					  "type": "uint256"
-					}
-				  ],
-				  "name": "Approval",
-				  "type": "event"
-				}
-			  ]
-		//const contractAddress = document.getElementById("contractAddress").value;
-		var tokenContract = new web3.eth.Contract(contractABI, contractAddress);
-		tokenContract.name.call(function(err, name) { 
-  if(err) { 
-	  console.log(err) 
-	}
-  if(name) {
-	console.log('The token name is: ' + name);
-  $('#tokenName').val(name); }
-})
-		
+		if (error) {console.log("error", error);}
+		else {console.log("result", result);}
 		startApp();
 	})
 });
 
-
-
-//Interacting with the smart contract --- TestTokenContract ---
-
-
-/** --- Balance of THIS token --- Todo: f() to apply to an another token
- * Check balance of this token for _owner(address)
- * token.balanceOf(address _owner) return value* 
- */
+//Interacting with the smart contract --- TestTokenContract on the ropstenNetwork ---
 
 function startApp(){
 
 	var account = web3.eth.accounts[0]
-var contractABI = [
+	var contractABI = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			},
+			{
+				"name": "_extraData",
+				"type": "bytes"
+			}
+		],
+		"name": "approveAndCall",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "fallback"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"name": "_spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "remaining",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "balance",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "version",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+	const contract = new web3.eth.Contract(contractABI);
+	const _contractAddress = '0x15699bdb2d9fff24b29c7554be64d88ba820c37b';
+
+	var myContractInstance = new web3.eth.Contract(contractABI, _contractAddress);
+
+	myContractInstance.methods.name().call(function(error, result){ 
+		if(error){console.error(error);}
+		if (result){console.log("Nom du coin demandé :" + result);}
+	});
+
+	myContractInstance.methods.symbol().call(function(error, symbol){
+		if(error){console.log(error)};
+		if(symbol){console.log("Symbol du token :" + symbol)};
+		$('#symbolOfToken').text(symbol);
+	})
+	myContractInstance.methods.balanceOf('0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54').call(function(error, balance){
+		if(error){console.log(error)};
+		if(balance){console.log("Balance of the token is :"+ balance )};
+		$('#balanceOfToken').text(balance);
+	})
+	myContractInstance.methods.allowance('0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54', '0x92a441d4b29688B5f1926b2f6870b93910DFbe99').call(function(error, allowance){
+		if(error){console.log(error)};
+		if(allowance){console.log("allowance for this address :"+ allowance)};
+		$('#allowanceAmount').text(allowance);
+	})
+
+	var allowanceAmount=$('#allowanceTo').val();
+	myContractInstance.methods.approve('0x92a441d4b29688B5f1926b2f6870b93910DFbe99', allowanceAmount).call(function(error, approve){
+	if(error){console.log(error)};
+	if(approve){console.log("allowance for this address :"+ approve)};
+	//$('#allowanceAmount').text(allowance);
+})
+	$("#myBtn" ).click(function() {
+	var allowanceAmount=$('#allowanceTo').val();
+	myContractInstance.methods.approve('0x92a441d4b29688B5f1926b2f6870b93910DFbe99', allowanceAmount).call(function(error, approve){
+			if(error){console.log(error)};
+			if(approve){console.log("allowance for this address :"+ approve)};
+			//$('#allowanceAmount').text(allowance);
+	})})};
+
+
 	
-		{
-		  "constant": true,
-		  "inputs": [],
-		  "name": "name",
-		  "outputs": [
-			{
-			  "name": "",
-			  "type": "string"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "name": "_spender",
-			  "type": "address"
-			},
-			{
-			  "name": "_value",
-			  "type": "uint256"
-			}
-		  ],
-		  "name": "approve",
-		  "outputs": [
-			{
-			  "name": "success",
-			  "type": "bool"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [],
-		  "name": "totalSupply",
-		  "outputs": [
-			{
-			  "name": "",
-			  "type": "uint256"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "name": "_from",
-			  "type": "address"
-			},
-			{
-			  "name": "_to",
-			  "type": "address"
-			},
-			{
-			  "name": "_value",
-			  "type": "uint256"
-			}
-		  ],
-		  "name": "transferFrom",
-		  "outputs": [
-			{
-			  "name": "success",
-			  "type": "bool"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [],
-		  "name": "decimals",
-		  "outputs": [
-			{
-			  "name": "",
-			  "type": "uint8"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [],
-		  "name": "version",
-		  "outputs": [
-			{
-			  "name": "",
-			  "type": "string"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "name": "_owner",
-			  "type": "address"
-			}
-		  ],
-		  "name": "balanceOf",
-		  "outputs": [
-			{
-			  "name": "balance",
-			  "type": "uint256"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [],
-		  "name": "symbol",
-		  "outputs": [
-			{
-			  "name": "",
-			  "type": "string"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "name": "_to",
-			  "type": "address"
-			},
-			{
-			  "name": "_value",
-			  "type": "uint256"
-			}
-		  ],
-		  "name": "transfer",
-		  "outputs": [
-			{
-			  "name": "success",
-			  "type": "bool"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "name": "_spender",
-			  "type": "address"
-			},
-			{
-			  "name": "_value",
-			  "type": "uint256"
-			},
-			{
-			  "name": "_extraData",
-			  "type": "bytes"
-			}
-		  ],
-		  "name": "approveAndCall",
-		  "outputs": [
-			{
-			  "name": "success",
-			  "type": "bool"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "name": "_owner",
-			  "type": "address"
-			},
-			{
-			  "name": "_spender",
-			  "type": "address"
-			}
-		  ],
-		  "name": "allowance",
-		  "outputs": [
-			{
-			  "name": "remaining",
-			  "type": "uint256"
-			}
-		  ],
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "type": "fallback"
-		},
-		{
-		  "anonymous": false,
-		  "inputs": [
-			{
-			  "indexed": true,
-			  "name": "_from",
-			  "type": "address"
-			},
-			{
-			  "indexed": true,
-			  "name": "_to",
-			  "type": "address"
-			},
-			{
-			  "indexed": false,
-			  "name": "_value",
-			  "type": "uint256"
-			}
-		  ],
-		  "name": "Transfer",
-		  "type": "event"
-		},
-		{
-		  "anonymous": false,
-		  "inputs": [
-			{
-			  "indexed": true,
-			  "name": "_owner",
-			  "type": "address"
-			},
-			{
-			  "indexed": true,
-			  "name": "_spender",
-			  "type": "address"
-			},
-			{
-			  "indexed": false,
-			  "name": "_value",
-			  "type": "uint256"
-			}
-		  ],
-		  "name": "Approval",
-		  "type": "event"
-		}
-	  ]
-const contractAddress = document.getElementById("contractAddress").value;
-var tokenContract = new web3.eth.Contract(abi, contractAddress);
-// Get the token NAME
-	tokenContract.name.call(function(err, name) { 
-  if(err) { 
-	  console.log(err) 
-	}
-  if(name) {
-	console.log('The token name is: ' + name);
-  $('#tokenName').val(name); }
-})
- // Get the token SYMBOL
-	tokenContract.symbol.call({from: addr}, function(err, symbol) {
-	if(err) { 
-		console.log(err) 
-	}
-	console.log('Token symbol: ' + symbol);
-	$('#tokenSymbol').val(symbol);
-  });
+	
 
- // balanceOf  
-  tokenContract.balanceOf.call(web3.eth.accounts[0], function(err, bal) {
-	if (err) { 
-		console.error(err) 
-	}
-	console.log('balance is ' + bal.toString(10));
-	$('#balanceOfToken').val(bal);
-  });
-  //OU ? voir version web3
-  tokenContract.balanceOf(account, function(err, ok) {console.log(err,ok.c[0])});
 
-/** --- Allowance ---
- * Check Allowance of this token for _owner(address), spender(address);
- * Check how many token is possible to allow = set 00.00 token /(token.balanceOf(address_owner) - allowance in progress)
- * 
- * For setting : setAllowance
- * token.Allowance(web.eth.account[0], input address _spender);
- * 
- * This value changes when approve or transferFrom are called.
- * 
- * Think about DecreaseAllowance n' IncreaseAllowance
- */
-//Only for visualisation of allowance
-var spender = $('#AddressToApprove').val(); 
-tokenContract.allowance.call(web3.eth.accounts[0], spender,  function (err, allow){
-	if(err) {
-		 console.log(err)
-		}
-	console.log('allowance for this' + allow.toString(10));
-	$('#allowance').val(allow);
-})
-/**
- * allowance(address ownerAddress, address spenderAddress)
-The allowance function tells 
-how many tokens the ownerAddress HAS ALLOWED the spenderAddress to spend.
- */
+
+
 
 
 
@@ -664,17 +408,6 @@ how many tokens the ownerAddress HAS ALLOWED the spenderAddress to spend.
 
  //This function is just being used to make an entry to the allowance array when another contract want to spend some tokens. _ spender is the address of the contract which is going to use it.
  // _value denotes the number of tokens to be spend
-allowAmount = document.getElementById("allowanceAmount").innerHTML
-spender = document.getElementById("AddressToApprove").innerHTML
-tokenContract.approve(spender, allowAmount, function(err, approval){
-	if(err) {
-		console.log(err)
-	}
-	console.log('boolean for this approval' + approval )
-	$('#approval').val(approval);
-})
-
-}
 
  
 
