@@ -2,7 +2,7 @@
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn = document.getElementById("myBtn1");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -49,8 +49,11 @@ web3.eth.getAccounts(function (error, accounts) {
 	if (error) {console.log(error);}
 	$('#Account').val(accounts[0]);
 	web3.eth.getBalance(accounts[0]).then(function (result) {
-		console.log("Balance : ", web3.utils.fromWei(result, 'ether'));
+		
+		 console.log("Balance : ", web3.utils.fromWei(result, 'ether'));
 		$('#BalanceEth').text(web3.utils.fromWei(result, 'ether'));
+		
+		
 	});
 });
 
@@ -348,84 +351,83 @@ function startApp(){
 	}
 ]
 	const contract = new web3.eth.Contract(contractABI);
-	const _contractAddress = '0x15699bdb2d9fff24b29c7554be64d88ba820c37b';
+	const _contractAddress = '0x15699bdb2d9fff24b29c7554be64d88ba820c37b'; //OR const _contractAddress = $('#_contractAddress).val();
+
 
 	var myContractInstance = new web3.eth.Contract(contractABI, _contractAddress);
 
 	myContractInstance.methods.name().call(function(error, result){ 
 		if(error){console.error(error);}
-		if (result){console.log("Nom du coin demandé :" + result);}
+		if (result){console.log("Name of the token :" + result);}
 	});
 
 	myContractInstance.methods.symbol().call(function(error, symbol){
 		if(error){console.log(error)};
-		if(symbol){console.log("Symbol du token :" + symbol)};
+		if(symbol){console.log("Token's symbol :" + symbol)};
 		$('#symbolOfToken').text(symbol);
 	})
+	//balanceOf(address ownerAddress) or web3.eth.accounts[0]
 	myContractInstance.methods.balanceOf('0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54').call(function(error, balance){
 		if(error){console.log(error)};
 		if(balance){console.log("Balance of the token is :"+ balance )};
 		$('#balanceOfToken').text(balance);
 	})
+
+	
+	//var allowanceAmount=$('#allowanceTo').val(); allowance(address ownerAddress, address spenderAddress)
 	myContractInstance.methods.allowance('0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54', '0x92a441d4b29688B5f1926b2f6870b93910DFbe99').call(function(error, allowance){
 		if(error){console.log(error)};
 		if(allowance){console.log("allowance for this address :"+ allowance)};
 		$('#allowanceAmount').text(allowance);
 	})
 
-	var allowanceAmount=$('#allowanceTo').val();
-	myContractInstance.methods.approve('0x92a441d4b29688B5f1926b2f6870b93910DFbe99', allowanceAmount).call(function(error, approve){
-	if(error){console.log(error)};
-	if(approve){console.log("allowance for this address :"+ approve)};
-	//$('#allowanceAmount').text(allowance);
-})
+	
+
+	//approve(address spenderAddress, uint256 approveValue)
 	$("#myBtn" ).click(function() {
-	var allowanceAmount=$('#allowanceTo').val();
-	myContractInstance.methods.approve('0x92a441d4b29688B5f1926b2f6870b93910DFbe99', allowanceAmount).call(function(error, approve){
+		console.log("Start allowance");
+	//web3.eth.accounts[0];
+	//var allowanceAmount=$('#allowanceTo').val();
+	//var _addressAllow = $('#_addressAllow').val();
+	//var allowanceAmount = 300;
+	myContractInstance.methods.approve('0x92a441d4b29688B5f1926b2f6870b93910DFbe99', 300).send({from:'0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54'}, function(error, approve){
 			if(error){console.log(error)};
 			if(approve){console.log("allowance for this address :"+ approve)};
 			//$('#allowanceAmount').text(allowance);
 	})})};
 
-
-	
-	
-
-
-
-
-
-
-
-/** -- Approval ---
- * Check if address _spender is allowed to spend token of account[0] + define the event of approval
- * function approve(address _spender, uint256 _value) returns (bool success)
- *
- * token.approve(param1, uint256 _value) returns bool success;
- * param1 = address _spender
- * param2 = uint256 _value = 00.00 token (allowed before in allowance function)
- */
-
- //This function is just being used to make an entry to the allowance array when another contract want to spend some tokens. _ spender is the address of the contract which is going to use it.
- // _value denotes the number of tokens to be spend
-
- 
-
-
-
-/** Documentation *
+//Issue: Error: Returned error: The method eth_sendTransaction does not exist/is not available
+/**  
  * 
-You aren't creating the contract object correctly. What version of Web3.js are you using? 1.0 or 0.2.x? Here is how you do it for each:
+Version of web3.js 1.0 or 0.2.x? Here is how you do it for each:
 
-1.0: var myContract = new web3.eth.Contract(abi, "0x2a2a7c53a6cc3d775e80c38d0fc446e73078902f")
+=> 1.0: var myContract = new web3.eth.Contract(abi, "0x2a2a7c53a6cc3d775e80c38d0fc446e73078902f")
 
 0.2.x: var myContract = web3.eth.contract(abi).at("0x2a2a7c53a6cc3d775e80c38d0fc446e73078902f")
- https://nuclearcryptobuddha.blog/2017/06/how-to-send-receive-and-check-balance-of-erc20-tokens-using-geth/
- https://github.com/danfinlay/human-standard-token-abi
- https://ropsten.etherscan.io/token/0xcfd76dacc71f65ad1137f9405ed8c25c9739ea9e?a=0xc3d309eca484db05655ad86d317c3c3ac8121d54#readContract
-https://ethereum.stackexchange.com/questions/12852/could-somebody-please-explain-in-detail-what-this-ethereum-contract-is-doing
-https://medium.com/coinmonks/interacting-with-ethereum-smart-contracts-through-web3-js-e0efad17977
-https://hackernoon.com/https-medium-com-momannn-live-testing-smart-contracts-with-estimategas-f45429086c3a
-https://ethereum.stackexchange.com/questions/46383/solidity-web3-token-balance
-doc sur front attack Vector https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit?source=post_page---------------------------#
+contract.methods.transfer('0x497fe03ba1dabf3b391079e8f69eb178243a736b')
+    .send({from:accounts[0]})
+    .then(console.log)
+    .catch(console.log)
+ 
+	transferFrom(address fromAddress, address toAddress, uint256 numberOfTokens)
+	TODO Monday 05/08 ethod eth_sendTransaction does not exist/is not available
 */
+
+/** Make a batch transaction
+ * var batch = web3.createBatch();
+batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
+batch.add(web3.eth.Contract(abi).at(address).balance.request(address, callback2));
+batch.execute();
+
+
+function multisendEther(address[] _contributors, uint256[] _balances) public payable {
+    uint256 total = msg.value;
+    require(_contributors.length <= 150); // limit to 150 addresses per 1 tx to make sure tx will be mined
+    uint256 i = 0;
+    for (i; i < _contributors.length; i++) {
+        require(total >= _balances[i]);
+        total = total.sub(_balances[i]);
+        _contributors[i].transfer(_balances[i]);
+    }
+}
+ */
