@@ -1,0 +1,21 @@
+{
+  "name": "AllowanceDapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Fernandes Guillaume <guillaume.fernandes@hotmail.fr>",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  },
+  "scripts": {
+    "start": "node live-server.js"
+  },
+  "dependencies": {
+    "bootstrap": "4.3.1",
+    "ethereumjs-testrpc": "^6.0.3",
+    "ethereumjs-tx": "^2.1.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "web3": "^0.20.1"
+  }
+}
