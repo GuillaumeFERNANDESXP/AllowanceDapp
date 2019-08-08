@@ -77,11 +77,22 @@
 			.slider.round:before {
 			  border-radius: 50%;
 			}
+			#NoIncreaseAllowance{
+				margin-top: 30px;
+				margin-left: 30%;
+			}
+
+			#HasIncreaseAllowance{
+				margin-top: 60px;
+				margin-left: 30%;
+			}
+			
 			</style>
 
 </head>
 
 <body>
+		
 		<div class="container">
 			<img src="320px-Ethereum_logo_2014.svg.png" alt="exemple de texte alternatif" width="80" height="120" position="center"/>
 				<label for="name" class="col-lg-2 control-label">
@@ -129,7 +140,6 @@
 					<p id="allowanceAmount"></p>
 				</td>
 				<td><button type="button" class="btn btn-primary" id="myBtn1">Set Allowance</button></td>
-
 			</tr>
 			<tr></tr>
 		</tbody>
@@ -154,16 +164,29 @@
 					<span class="close">&times;</span>
 					<h3> Allowance</h3>
 				</div>
+				
 				<div class="modal-body">
-					<p>Set <p id="tokenName">TEST(TestToken)</p> allowance to :  <input id="allowanceTo">
+					<div id="NoIncreaseAllowance">  
+					<p id="tokenName">TEST(TestToken) No IncreaseAllowance.</p> allowance to :  <input id="allowanceTo">
 						<p id="tokenSymbol"></p>
 					</p>
 					<td><button type="button" class="btn btn-primary" id="myBtn">Set Allowance </button></td>
 					<p></p>
+					</div>
+
+					<div id="HasIncreaseAllowance">
+					<div><p id="tokenName">TEST(TestToken) Increase/Decrease allowance</p> IncreaseAllowance amount :  <input id="allowanceTo"> </div>
+					<br>
+					<div> DecreaseAllowance amount :  <input id="allowanceTo">    </div>
+					<p id="tokenSymbol"></p>
+				</p>
+				<td><button type="button" class="btn btn-primary" id="myBtn">Set new Allowance </button></td>
+				<p></p>
+			</div>
+			</div>
 				</div>
 				<div class="modal-footer">
-					<h3>“You can add more token allowances to this transaction, then click the Set allowances 
-						button to generate, sign and send all transactions together.”</h3>
+					
 				</div>
 			</div>
 		</div>

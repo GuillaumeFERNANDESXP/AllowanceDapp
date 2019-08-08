@@ -13,6 +13,7 @@
   "dependencies": {
     "bootstrap": "4.3.1",
     "ethereumjs-testrpc": "^6.0.3",
+    "ethereumjs-tx": "^2.1.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "web3": "^0.20.1"
