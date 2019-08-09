@@ -395,6 +395,25 @@ function startApp(){
 		$('#allowanceAmount').text(allowance);
 	})
 
+
+
+
+	function hasFunction(contractABI, name) {
+		for (var element of contractABI) {
+		  if (element["name"] === name) { 
+			return true
+		   }
+		}
+	  
+		return false
+	  }
+	  
+	  console.log(hasFunction(contractABI, "approve"))
+	  
+	  console.log(hasFunction(contractABI, "increaseAllowance"))
+	  
+	  console.log(hasfunction(contractABI, "decreaseAllowance"))
+
 	//approve(address spenderAddress, uint256 approveValue)
 	$("#myBtn" ).click(function() {
 		console.log("Start allowance");
@@ -406,8 +425,6 @@ function startApp(){
 			if(error){console.log(error)};
 			if(approve){console.log("allowance for this address :"+ approve)};
 			//$('#allowanceAmount').text(allowance);
-
-
 
 	// * Path 2 Increase/DecreaseAllowance *
 	
