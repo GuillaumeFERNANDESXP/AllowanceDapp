@@ -56,6 +56,7 @@ web3.eth.getAccounts(function (error, accounts) {
 	});
 });
 
+
 $(document).ready(function () {
 	console.log("ready!");
 	if (typeof window !== 'undefined') {
@@ -78,23 +79,28 @@ $(document).ready(function () {
 //Interacting with the smart contract --- TestTokenContract on the ropstenNetwork ---
 
 function startApp(){
-	var version = web3.version.api;
-            /* A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract */
-    $.getJSON('http://api.etherscan.io/api?module=contract&action=getabi&address=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359', function (data) {
-        var contractABI = "";
-        contractABI = JSON.parse(data.result);
-        if (contractABI != ''){
-            var MyContract = new web3.eth.Contract(contractABI);
-            var myContractInstance = MyContract.at("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359");
-		
-			var result = myContractInstance.memberId("0xfe8ad7dd2f564a877cc23feea6c0a9cc2e783715"); // Valid etherscan API key
-            console.log("result1 : " + result);            
-            var result = myContractInstance.members(1);
-            console.log("result2 : " + result);
-        } else {
-            console.log("Error" );
-        }            
-    });
+	/**
+	 * var version = web3.version.api;
+             A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract 
+			$.getJSON('http://api.etherscan.io/api?module=contract&action=getabi&address=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359', function (data) {
+				var contractABI = "";
+				contractABI = JSON.parse(data.result);
+				if (contractABI != ''){
+					var MyContract = new web3.eth.Contract(contractABI);
+					var myContractInstance = MyContract.at("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359");
+				
+					var result = myContractInstance.memberId("0xfe8ad7dd2f564a877cc23feea6c0a9cc2e783715"); // Valid etherscan API key
+					console.log("result1 : " + result);            
+					var result = myContractInstance.members(1);
+					console.log("result2 : " + result);
+				} else {
+					console.log("Error" );
+				}            
+			}); 
+	 * 
+	 * 
+	 */
+	
 	var account = web3.eth.accounts[0]
 	var contractABI = [
 	{
@@ -397,23 +403,18 @@ function startApp(){
 
 
 
-
-	function hasFunction(contractABI, name) {
+/*  function hasFunction(contractABI, name) {
 		for (var element of contractABI) {
 		  if (element["name"] === name) { 
 			return true
 		   }
 		}
-	  
 		return false
 	  }
-	  
 	  console.log(hasFunction(contractABI, "approve"))
-	  
 	  console.log(hasFunction(contractABI, "increaseAllowance"))
-	  
 	  console.log(hasfunction(contractABI, "decreaseAllowance"))
-
+*/
 	//approve(address spenderAddress, uint256 approveValue)
 	$("#myBtn" ).click(function() {
 		console.log("Start allowance");
@@ -427,7 +428,6 @@ function startApp(){
 			//$('#allowanceAmount').text(allowance);
 
 	// * Path 2 Increase/DecreaseAllowance *
-	
 	// * For increaseAllowance * => REPLACE _APPROVE() <=
 	//1st get amount of allowance
 	myContractInstance.methods.allowance('0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54', '0x92a441d4b29688B5f1926b2f6870b93910DFbe99').call(function(error, allowance){
@@ -453,36 +453,14 @@ function startApp(){
 });
 })}	
 
-	
- /* 
- * WARNING: Infura doesn't support sending non-raw transactions. See https://infura.io/docs/ethereum/json-rpc/eth_sendRawTransaction
- * So I have to:
- * 1. Prepare the transaction
- * 2. Sign it 
- * 3. Send it (using infura)
- * 
+//Check if the IncreaseAllowance function exist
+/**
+ * myContractInstance.methods.increaseAllowance( _spender, addAllowance).estimateGas({from:'0xC3d309EcA484Db05655Ad86D317c3C3ac8121D54'}, function(error, increaseAllowance){
+			if(error){console.log(error)};
+			if(increaseAllowance){console.log("allowance for this address :"+ increaseAllowance)};
  */
-	/**Pre-1.0 web3
-	 * 
-	 * web3.eth.getAccounts(function(error, accounts){
-		if (error) throw error;
-	
-	myContractInstance.methods.Transfer("0x1BD9514B03292448efd0eFDb88CD4cd34BBBcf7E", 300)({from:"0x2a0a2c5029621007BC539152a87f547Af93326b7"}), function(error, txnHash){
-		if (error) throw error;
-		console.log(txHash);
-	}});
-	 *  
-web3.eth.getAccounts().then((accounts) => {
-		myContractInstance.methods.Transfer(
-			"0x1BD9514B03292448efd0eFDb88CD4cd34BBBcf7E", 
-			300).send({from:"0x2a0a2c5029621007BC539152a87f547Af93326b7"})
-			.once('transactionHash', (hash) => {console.log(hash);  })
-			.once('receipt', (receipt) => {console.log(receipt); }  )
-	});
-	 * */
-//Issue: Error: Returned error: The method eth_sendTransaction does not exist/is not available
-/**  
- * 
+
+/* 
 Version of web3.js 1.0 or 0.2.x? Here is how you do it for each:
 
 => 1.0: var myContract = new web3.eth.Contract(abi, "0x2a2a7c53a6cc3d775e80c38d0fc446e73078902f")
@@ -498,28 +476,15 @@ contract.methods.transfer('0x497fe03ba1dabf3b391079e8f69eb178243a736b')
 */
 
 /**
-
- //sendRawTransaction 
- var rawTransaction ={
-	 "from": "0x92a441d4b29688B5f1926b2f6870b93910DFbe99",
-	 "nonce": web3.toHex(count),
-	 "gasPrice": "0x04e3b29200",
-	 "gasLimit":"0x7458",
-	 "to":contractAddress,
-	"value":"0x0",
-	"data": myContractInstance.methods.transfer(destAdress, transferAmount).encodeABI(),
-	"chainId":0x03,
- }
-	myContractInstance.methods.transferFrom(fromAddress, toAddress, numberOfTokens).send({from:web3.eth.account[0]}, function(error, transferFrom){
-
-	if(error){console.log(error)}
-	if(transferFrom){console.log(transferFrom)}
- })
- 
-
- or myContractInstance.methods.transfer.sendTransaction("0x1BD9514B03292448efd0eFDb88CD4cd34BBBcf7E", 300).send({from:"0x2a0a2c5029621007BC539152a87f547Af93326b7"}), function(error, txnHash){
-	if (error) throw error;
-	console.log(txHash);
- };
  */
 
+/* *EstimateGas* 
+ // using the promise
+myContract.methods.myMethod(123).estimateGas({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+.then(function(gasAmount){
+    ...
+})
+.catch(function(error){
+    ...
+})
+*/
