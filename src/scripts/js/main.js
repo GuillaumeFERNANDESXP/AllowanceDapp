@@ -62,11 +62,11 @@ $(document).ready(function () {
 	if (typeof window !== 'undefined') {
         if(window.web3 !== 'undefined'){
 			const provider = new Web3.providers.HttpProvider(
-                'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); //API key Infura
+                'https://ropsten.infura.io/IDPROJECT'); //API key Infura
             web3 = new Web3(provider);
         } else{web3 = new Web3(window.web3.currentProvider);}
     } else {const provider = new Web3.providers.HttpProvider(
-			'https://ropsten.infura.io/v3/9e21dc77472b4080bda47efba7ed3065'); // API key Infura
+			'https://ropsten.infura.io/v3/IDPROJECT'); // API key Infura
         web3 = new Web3(provider);
     };	/* Get Node Info */
 	web3.eth.getNodeInfo(function (error, result) {
@@ -89,7 +89,7 @@ function startApp(){
 					var MyContract = new web3.eth.Contract(contractABI);
 					var myContractInstance = MyContract.at("0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359");
 				
-					var result = myContractInstance.memberId("0xfe8ad7dd2f564a877cc23feea6c0a9cc2e783715"); // Valid etherscan API key
+					var result = myContractInstance.memberId(""); // Valid etherscan API key
 					console.log("result1 : " + result);            
 					var result = myContractInstance.members(1);
 					console.log("result2 : " + result);
